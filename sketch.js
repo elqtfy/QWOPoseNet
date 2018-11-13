@@ -11,11 +11,15 @@ PoseNet example using p5.js
 let video;
 let poseNet;
 let poses = [];
+var playing = false;
+var button;
 
 function setup() {
   createCanvas(640, 480);
   video = createVideo('QWOP.mp4');
-  video.loop();
+  button = createButton('play');
+  button.mousePressed(toggleVid); // attach button listener
+
   video.size(width, height);
 
   // Create a new poseNet method with a single detection
@@ -27,6 +31,17 @@ function setup() {
   });
   // Hide the video element, and just show the canvas
   video.hide();
+}
+
+function toggleVid() {
+  if (playing) {
+    video.pause();
+    button.html('play');
+  } else {
+    video.loop();
+    button.html('pause');
+  }
+  playing = !playing;
 }
 
 function modelReady() {
